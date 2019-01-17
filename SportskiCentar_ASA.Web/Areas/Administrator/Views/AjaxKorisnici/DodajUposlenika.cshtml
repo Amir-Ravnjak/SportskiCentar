@@ -1,0 +1,22 @@
+﻿@using SportskiCentar_ASA.Web.Areas.Administrator.ViewModels;
+@model AjaxDodajUposlenikaVM
+
+<label style="width:10%">Ime</label><input class="form-control" type="text" placeholder="Ime" name="ime" /><br />
+
+<label style="width:10%">Prezime</label><input class="form-control" type="text" placeholder="Prezime" name="prezime" /><br />
+
+<label style="width:10%">Tip uposlenika</label>
+<select class="form-control" name="tipUposlenika">
+    @foreach (var x in Model.tipUposlenika)
+    {
+        <option value="@x.Value">@x.Text</option>
+    }
+</select><br />
+
+<label style="width:10%">Grad</label>
+<select class="form-control" name="grad">
+    @foreach (var x in Model.gradovi)
+    {
+        <option value="@x.Value">@x.Text</option>
+    }
+</select><br />

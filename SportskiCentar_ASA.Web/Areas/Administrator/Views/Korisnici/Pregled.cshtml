@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewData["Title"] = "Pregled";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <header class="panel-heading">
+                <h2>Nalozi</h2>
+            </header>
+            <button id="admin" class="btn">Administratori</button><button id="uposlenici" class="btn">Uposlenici</button><button id="klijenti" class="btn">Klijenti</button>
+            <br />
+            <br />
+            <div id="ajaxPoziv"><h3>Odaberite tip korisnika za pregled.</h3></div>
+        </section>
+    </section>
+</section>
+
+
+<script>
+    $("#admin").click(function myfunction() {
+        $.get("/Administrator/AjaxKorisnici/Administratori", function (rezultat, status) {
+            $("#ajaxPoziv").html(rezultat);
+        })
+    }        
+    );
+
+    $("#uposlenici").click(function myfunction() {
+        $.get("/Administrator/AjaxKorisnici/uposlenici", function (rezultat, status) {
+            $("#ajaxPoziv").html(rezultat);
+        })
+    }
+    );
+
+    $("#klijenti").click(function myfunction() {
+        $.get("/Administrator/AjaxKorisnici/klijenti", function (rezultat, status) {
+            $("#ajaxPoziv").html(rezultat);
+        })
+    }
+    );
+</script>

@@ -1,0 +1,51 @@
+﻿@using SportskiCentar_ASA.Web.Areas.Administrator.ViewModels;
+@model AjaxKlijentiVM
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>Ime</td>
+            <td>Prezime</td>
+            <td>Korisničko ime</td>
+            <td>Spol</td>
+            <td>Grad</td>
+            <td>JMBG</td>
+            <td>Akcija</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var x in Model.klijenti)
+        {
+            <tr>
+                <td>@x.ime</td>
+                <td>@x.prezime</td>
+                <td>@x.username</td>
+                <td>@x.spol</td>
+                <td>@x.grad</td>
+                <td>@x.jmbg</td>
+                <td>
+                    <button id="btn1-@x.id" class="btn btn-primary">Uredi</button>
+                    <button id="btn2-@x.id" class="btn btn-danger">Obriši</button>
+                    <script>
+
+                        $("#btn1-@x.id").click(function myfunction() {
+                            $.get("/Administrator/AjaxKorisnici/UrediKlijenta?id=@x.id", function (rezultat, status) {
+                                $("#ajaxPoziv").html(rezultat);
+                            })
+                        }
+                        );
+                        $("#btn2-@x.id").click(function myfunction() {
+                            $.get("/Administrator/AjaxKorisnici/ObrisiKlijenta?id=@x.id", function (rezultat, status) {
+                                $("#ajaxPoziv").html(rezultat);
+                            })
+                        }
+                        );
+
+                    </script>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

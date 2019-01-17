@@ -1,0 +1,52 @@
+﻿@model SportskiCentar_ASA.Web.Areas.Klijent.ViewModels.RezervacijePrikazRezervacijaVM
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section id="main-content">
+    <section class="wrapper">
+
+        <section class="panel">
+            <section class="panel-heading">
+                <h2>Lista rezervacija</h2>
+            </section>
+            <section class="panel-body">
+
+    
+
+                <br />
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>@Html.ActionLink("Datum i vrijeme", "PrikazRezervacija", new { sortOrder = ViewBag.DatumSortParm, page = Model.PagingInfo.CurrentPage })</th>
+                            <th>@Html.ActionLink("Prostorija", "PrikazRezervacija", new { sortOrder = ViewBag.ProstorijaSortParm, page = Model.PagingInfo.CurrentPage })</th>
+                            <th>Odobrena</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var k in Model.rows)
+                        {
+                            <tr>
+                                
+                                <td>@k.DatumVrijeme</td>
+                                <td>@k.Prostorija</td>
+                                <td>@(k.Odobrena==true?"Odobrena":"Nije odobrena")</td>
+                               
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div page-model="@Model.PagingInfo" page-action="PrikazRezervacija" page-classes-enabled="true"
+                     page-class="btn" page-class-normal="btn-default"
+                     page-class-selected="btn-info" class="btn-group pull-right">
+                </div>
+            </section>
+        </section>
+    </section>
+</section>
+
+
+
+

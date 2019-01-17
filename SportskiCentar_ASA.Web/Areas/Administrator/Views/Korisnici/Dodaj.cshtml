@@ -1,0 +1,51 @@
+﻿@using SportskiCentar_ASA.Web.Areas.Administrator.ViewModels;
+@model KorisniciDodajVM
+@{
+    ViewData["Title"] = "Dodaj";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <header class="panel-heading">
+                <h2>Kreiraj novi nalog</h2><br />
+            </header>
+            <form class="form-inline" action="Snimi" method="post">
+                <label style="width:10%">Korisničko ime</label><input class="form-control" type="text" placeholder="Korisničko ime" name="username" required /><br />
+                <label style="width:10%">Lozinka</label><input class="form-control" type="password" placeholder="Lozinka" name="lozinka" required /><br />
+                <label style="width:10%">Email</label><input class="form-control" type="email" placeholder="Email" name="email" required /><br />
+                <label style="width:10%">Administrator</label><input class="form-control" id="admin" type="radio" name="tipKorisnika" value="1" required /><br />
+                <label style="width:10%">Uposlenik</label><input class="form-control" id="uposlenici" type="radio" name="tipKorisnika" value="2" /><br />
+                <label style="width:10%">Klijent</label><input class="form-control" id="klijenti" type="radio" name="tipKorisnika" value="3" /><br />
+                <div id="ajaxPoziv">
+
+                </div>
+                <input class="btn btn-primary" type="submit" value="Snimi" />
+            </form>
+        </section>
+    </section>
+</section>
+
+<script>
+    $("#admin").click(function myfunction() {
+        $.get("/Administrator/AjaxKorisnici/DodajAdministratora", function (rezultat, status) {
+            $("#ajaxPoziv").html(rezultat);
+        })
+    }
+    );
+
+    $("#uposlenici").click(function myfunction() {
+        $.get("/Administrator/AjaxKorisnici/DodajUposlenika", function (rezultat, status) {
+            $("#ajaxPoziv").html(rezultat);
+        })
+    }
+    );
+
+    $("#klijenti").click(function myfunction() {
+        $.get("/Administrator/AjaxKorisnici/DodajKlijenta", function (rezultat, status) {
+            $("#ajaxPoziv").html(rezultat);
+        })
+    }
+    );
+</script>

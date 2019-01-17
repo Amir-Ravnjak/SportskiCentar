@@ -1,0 +1,49 @@
+﻿@model SportskiCentar_ASA.Web.Areas.Uposlenik.ViewModels.NalogIndexVM
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <header class="panel-heading">
+                <h2>Vaši podaci</h2>
+            </header>
+            <div class="panel-body">
+                <form>
+                    <div class="form-group">
+                        <label asp-for="UposlenikID" hidden"></label>
+                        <input type="hidden" asp-for="UposlenikID" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="KorisnickoIme">Korisnicko ime:</label>
+                        <input asp-for="KorisnickoIme" readonly class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Ime">Ime:</label>
+                        <input asp-for="Ime" readonly class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Prezime">Prezime:</label>
+                        <input asp-for="Prezime" readonly class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Grad">Grad:</label>
+                        <input asp-for="Grad" readonly class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TipUposlenika">Tip uposlenika:</label>
+                        <input asp-for="TipUposlenika" readonly class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Plata">Plata:</label>
+                        <input asp-for="Plata" readonly class="form-control" />
+                    </div>
+                </form>
+            </div>
+        </section>
+    </section>
+</section>
+

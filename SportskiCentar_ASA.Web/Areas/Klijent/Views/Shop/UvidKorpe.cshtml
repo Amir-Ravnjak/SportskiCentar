@@ -1,0 +1,135 @@
+﻿@using SportskiCentar_ASA.Web.Areas.Klijent.ViewModels
+@model SportskiCentar_ASA.Web.Areas.Klijent.ViewModels.ShopUvidKorpeVM
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <section class="panel-heading">
+                <h2>Uvid u korpu</h2>
+            </section>
+            <section class="heading">
+                <div style="float:right">s</div>
+            </section>
+            <section class="panel-body">
+                <div class="pull-right">
+                    @if (Model.NarudzbaID != 0)
+                    {
+
+                        <a asp-action="PrikazArtikala" asp-controller="Shop" class="btn btn-success"><i class="fa fa-plus"></i> Dodaj jos artikala</a>
+
+                    }
+                    </div>
+             
+                <br /><br />
+                @if (Model.NarudzbaID != 0)
+                {
+
+                    <table class="table table-borderer table-hover">
+                        <thead>
+                            <tr>
+                                <th>Naziv</th>
+                                <th>Cijena</th>
+                                <th>Kolicina</th>
+                                <th>Podkategorija</th>
+                                <th>Slika</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var i in Model.rows)
+                            {
+
+                                <tr>
+
+                                    <td>@i.Naziv</td>
+                                    <td>@i.Cijena KM</td>
+                                    <td>
+                                        <form action="@Url.Action("PovecajSmanjiStanje", "Shop", new { Area = "Klijent" })" method="post">
+                                            @*<form  id="formaID_@i.NarudzbaStavkeID">*@
+                                            <input type="hidden" value="@i.NarudzbaStavkeID" name="NarudzbaStavkeID" />
+                                            <input type="number" value="@i.OdabranaKolicina" name="OdabranaKolicina" />
+                                            <input type="submit" class="btn btn-warning" value="Spasi" />
+                                        </form>
+                                    </td>
+                                    <td>@i.Podkategorija</td>
+                                    <td>
+                                        @{ if (i.Fajl != null)
+                                            {
+                                                <img class="img-responsive" src="@Url.Action("ViewImage", "Shop", new { FajlID = i.Fajl.Id })" alt="Nema sliku" />
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        <a asp-action="Obrisi" asp-route-NarudzbaStavkeID="@i.NarudzbaStavkeID" class="btn btn-danger">Obrisi</a>
+
+                                    </td>
+                                </tr>
+
+
+
+                              }
+                        </tbody>
+                    </table>
+                    <br />
+                    <form id="formaID">
+                        <input type="hidden" value="@Model.NarudzbaID" name="NarudzbaID" />
+
+                        <div class="pull-left">
+                            <label>Ukupan iznos:</label>
+                            <input type="text" value="@Model.UkupanIznos" name="UkupanIznos" />
+                        </div>
+                        <div class="pull-right">
+                            <label>Zelite dostavu:</label>
+                            @Html.CheckBoxFor(model => model.ZeliDostavu)
+
+                            <br /><br />
+                            <button type="button" class="btnNaruci btn btn-primary "><i class="fa fa-save"></i>Naruci</button>
+
+                        </div>
+
+
+                    </form>
+
+
+                   }
+                @if(Model.NarudzbaID==0)
+                {
+                    <h3>Nemate dodan niti jedan proizvod.</h3>
+
+                    <a asp-area="Klijent" class="btn btn-primary" asp-controller="Shop" asp-action="PrikazArtikala">
+                        Artikli
+                    </a>
+                }
+              
+
+
+             
+            </section>
+           
+        </section>
+    </section>
+</section>
+<div id="nekiID" ></div>
+<script>
+    $(".btnNaruci").click(function (event) {
+        var form = $("#formaID");
+
+        $.ajax({
+            type: "POST",
+            url:"/Klijent%2FRacun/PraviRacun",
+            data: form.serialize(),
+            success: function (rezultat) {
+                $("#nekiID").html(rezultat);
+            }
+        });
+    });
+
+
+</script>

@@ -1,0 +1,40 @@
+﻿@using SportskiCentar_ASA.Web.ViewModels;
+@model AutentifikacijaTokenLoginVM
+
+@{
+    ViewData["Title"] = "tokenLogin";
+}
+
+
+<style>
+    h5 {
+        color: red;
+    }
+
+    #main-content {
+        text-align: center;
+    }
+</style>
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <header class="panel-heading">
+                <h2>Unesite login token</h2><br />
+            </header>
+            <h5>@Model.msg</h5>
+            <form class="form-inline" id="forma1" action="provjeriToken" method="post">
+                <input class="form-control" type="text" name="token" required /><br />
+                <input type="number" name="nalogId" hidden value="@Model.nalogId" />
+                <br />
+                <br />
+                <input id="subbtn" type="submit" class="btn btn-primary" value="Potvrdi" /><a href="/Autentifikacija/Prijava" style="margin-left:5px" class="btn btn-primary">Vrati se na login</a>
+
+            </form>
+        </section>
+    </section>
+</section>
+
+
+
+

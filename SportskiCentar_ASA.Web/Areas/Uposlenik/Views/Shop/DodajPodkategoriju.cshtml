@@ -1,0 +1,46 @@
+﻿@model AjaxPodkategorijeDodajVM
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <header class="panel-heading">
+                <h4>Nova podkategorija</h4>
+            </header>
+            <div class="panel-body">
+                <form id="formaIDPodkategorija">
+                 
+                    <div class="col-2">
+                        <label asp-for="Podkategorija.KategorijaID">Kategorija:</label>
+                        <select asp-for="Podkategorija.KategorijaID" asp-items="@Model.Kategorije" class="form-control"></select>
+                    </div>
+                    <div class="col-2">
+                        <label asp-for="Podkategorija.Naziv">Naziv:</label>
+                        <input asp-for="Podkategorija.Naziv" class="form-control" />
+                    </div>
+
+                </form>
+
+                <input id="buttonID" type="submit" value="Snimi" class="btn btn-success" />
+
+            </div>
+        </section>
+    </section>
+</section>
+
+<script>
+    $("#buttonID").click(function () {
+        var forma = $("#formaIDPodkategorija");
+        $.ajax({
+            type: "POST",
+            url: "/Uposlenik/Shop/SnimiPodkategoriju",
+            data: forma.serialize(),
+            success: function (rezultat) {
+                $("#ajaxID").html(rezultat);
+
+            }
+
+        });
+
+    });
+</script>
+

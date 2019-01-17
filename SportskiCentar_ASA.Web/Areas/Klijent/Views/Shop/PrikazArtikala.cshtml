@@ -1,0 +1,89 @@
+﻿@using SportskiCentar_ASA.Web.Areas.Klijent.ViewModels
+@model SportskiCentar_ASA.Web.Areas.Klijent.ViewModels.ShopPrikazArtikalaVM
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <section class="panel-heading">
+                <h2>Lista artikala</h2>
+            </section>
+            <section class="panel-body">
+            
+                <form>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <input name="pretragaString" asp-for="pretragaString" class="form-control" placeholder="Unesite naziv artikla ili podkategoriju" />
+                        </div>
+                        <div class="col-md-2">
+                            <button style="width:100px" class="btn btn-primary"><i class="fa fa-search"></i> Pretraga</button>
+                        </div>
+                    </div>
+                </form>
+                <br /><br />
+                <table class="table table-borderer table-hover">
+                    <thead>
+                        <tr>
+                            <th>@Html.ActionLink("Naziv", "PrikazArtikala", new { sortOrder = ViewBag.NazivSortParm, page = Model.PagingInfo.CurrentPage })</th>
+                            <th>@Html.ActionLink("Cijena", "PrikazArtikala", new { sortOrder = ViewBag.CijenaSortParm, page = Model.PagingInfo.CurrentPage })</th>
+                            <th>Kolicina</th>
+                             <th>Podkategorija</th>
+                            <th>Slika</th>
+                            <th>Odabrana kolicina</th>
+                           
+                          
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var i in Model.rows)
+                          {
+                           
+                                <tr>
+                              
+                                        <td>@i.Naziv</td>
+                                        <td>@i.Cijena KM</td>
+                                        <td>@i.Kolicina</td>
+                                        <td>@i.Podkategorija</td>
+                                    <td>
+                                        @{ if (i.Fajl != null)
+                {
+                                                <img class="img-responsive" src="@Url.Action("ViewImage", "Shop", new { FajlID = i.Fajl.Id })" alt="Nema sliku" />
+                                            }
+                                        }
+                                    </td>
+                                        <td>
+                                            <form action="@Url.Action("StaviUKorpu", "Shop", new { Area = "Klijent" })" method="post">
+                                                <input type="number" value="@i.ArtikalID" name="ArtikalID" hidden />
+                                                <input type="number" value="@i.OdabranaKolicina" name="Kolicina" />
+                                                <input type="submit" class="btn btn-warning" value="Stavi u korpu" />
+
+                                            </form>
+                                        </td>
+                                       
+
+                                        <td>
+                                           
+                                        </td>
+                                  
+                                      </tr>
+
+                           
+                            
+                            }
+                    </tbody>
+                </table>
+                <div page-model="@Model.PagingInfo" page-action="PrikazArtikala" page-classes-enabled="true"
+                     page-class="btn" page-class-normal="btn-default"
+                     page-class-selected="btn-info" class="btn-group pull-right">
+                </div>
+            </section>
+
+        </section>
+    </section>
+</section>

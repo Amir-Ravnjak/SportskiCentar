@@ -1,0 +1,49 @@
+﻿@using SportskiCentar_ASA.Web.Areas.Administrator.ViewModels;
+@model PoslovanjeTerminiAjaxVM
+
+
+<div>
+    <h2>Propali termini</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Datum i vrijeme</td>
+                <td>Cijena</td>
+                <td>Prostorija</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model.PropaliTermini)
+            {
+                <tr>
+                    <td>@x.DatumIVrijeme.ToString()</td>
+                    <td>@x.cijena</td>
+                    <td>@x.Prostorija</td>               
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h2>Slobodni termini</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Datum i vrijeme</td>
+                <td>Cijena</td>
+                <td>Prostorija</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model.Termini)
+            {
+                <tr>
+                    <td>@x.DatumIVrijeme.ToString()</td>
+                    <td>@x.cijena</td>
+                    <td>@x.Prostorija</td>                    
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

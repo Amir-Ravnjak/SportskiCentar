@@ -1,0 +1,42 @@
+﻿@using SportskiCentar_ASA.Web.ViewModels;
+@model LoginVM
+@{
+    ViewData["Title"] = "Prijava";
+}
+
+
+<!-- Bootstrap core CSS -->
+<link href="~/css/bootstrap.min.css" rel="stylesheet">
+<link href="~/css/validationErrors.css" rel="stylesheet">
+<link href="~/css/bootstrap-reset.css" rel="stylesheet">
+<!--external css-->
+<link href="~/css/font-awesome/css/font-awesome.css" rel="stylesheet" />
+<!-- Custom styles for this template -->
+<link href="~/css/style.css" rel="stylesheet">
+<link href="~/css/style-responsive.css" rel="stylesheet" />
+<style>
+    .field-validation-error{
+        color:red;
+    }
+</style>
+
+<div class="container" style="width:40%;">
+    <form class="form-signin" asp-action="Prijava" method="post">
+        <h2 class="form-signin-heading text-center">Sportski centar "ASA"</h2>
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+        }
+            <input asp-for="Username" class="form-control" placeholder="Unesite vase korisnicko ime" autofocus />
+            @Html.ValidationMessageFor(model=>model.Username)
+            <input asp-for="Password" class="form-control" placeholder="Unesite vasu lozinku" />
+            @Html.ValidationMessageFor(model => model.Password)
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Prijava</button>
+       
+    </form>
+    <br />
+    <br />
+
+    <a href="/autentifikacija/registracija" class="btn btn-primary btn-block ">Registriraj se</a>
+</div>
+

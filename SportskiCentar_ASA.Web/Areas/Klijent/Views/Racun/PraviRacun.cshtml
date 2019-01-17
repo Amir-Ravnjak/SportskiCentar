@@ -1,0 +1,28 @@
+﻿@model SportskiCentar_ASA.Web.Areas.Klijent.ViewModels.RacunPraviRacunVM
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <header class="panel-heading">
+                <h3>Uspjesno ste narucili odabrane proizvode!</h3>
+            </header>
+            <div class="panel-body">
+               @if (Model.Dostava)
+               {
+                   <h4>Vasi proizvodi ce stici na vasu adresu u roku tri(radna) dana.</h4>
+
+               }
+               else
+               {
+                <h4>Vasi proizvodi ce biti spremni u roku tri(radna) dana, te ih mozete preuzeti u nasem centru.</h4>
+
+               }
+             
+               <a asp-area="Klijent" class="btn btn-success" asp-controller="Rezervacije" asp-action="PrikazTermina">
+                Termini</a>
+                <a asp-area="Klijent" class="btn btn-primary" asp-controller="Shop" asp-action="PrikazArtikala">
+                Artikli</a>
+
+            </div>
+        </section>
+    </section>
+</section>

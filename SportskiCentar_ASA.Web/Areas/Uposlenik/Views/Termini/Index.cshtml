@@ -1,0 +1,106 @@
+﻿@model TerminiIndexVM
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section id="main-content">
+    <section class="wrapper">
+
+        <section class="panel">
+            <section class="panel-heading">
+                <h2>Lista rezervacija</h2>
+            </section>
+            <section class="panel-body">
+
+                <form>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <input name="pretragaString" asp-for="pretragaString" class="form-control" placeholder="Unesite ime, prezime ili prostoriju" />
+                        </div>
+                        <div class="col-md-2">
+                            <button style="width:131px" class="btn btn-primary"><i class="fa fa-search"></i> Pretraga</button>
+                        </div>
+                    </div>
+                </form>
+
+                <br />
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Klijent</th>
+                            <th>@Html.ActionLink("Datum i vrijeme", "Index", new { sortOrder = ViewBag.DatumSortParm, page = Model.PagingInfo.CurrentPage })</th>
+                            <th>@Html.ActionLink("Prostorija", "Index", new { sortOrder = ViewBag.ProstorijaSortParm, page = Model.PagingInfo.CurrentPage })</th>
+                            <th>Uplata</th>
+                            <th>Odobrena</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var k in Model.Rows)
+                        {
+                            <tr>
+                                <td>@k.Klijent</td>
+                                <td>@k.DatumVrijeme</td>
+                                <td>@k.Prostorija</td>
+                                <td>@k.Uplata KM</td>
+                                <td><span class="replace_@k.RezervacijaID">@k.Odobrena</span></td>
+                                <td style="border:0">
+                                        <button type="button" class="btn btn-success btnActivate btn-sm" idValue="@k.RezervacijaID">
+                                            <span class="btnText_@k.RezervacijaID">
+                                                @if (k.Odobrena == "Ne")
+                                                {
+                                                    @:Odobri
+                                                }
+                                                else
+                                                {
+                                                    @:Zabrani
+                                                }
+                                            </span>
+                                        </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div page-model="@Model.PagingInfo" page-action="Index" page-classes-enabled="true"
+                     page-class="btn" page-class-normal="btn-default"
+                     page-class-selected="btn-info" class="btn-group pull-right">
+                </div>
+            </section>
+        </section>
+    </section>
+</section>
+
+<script>
+
+
+
+
+    $(".btnActivate").click(function () {
+        var btn = $(this);
+        var id = btn.attr("idValue");
+
+        $.ajax({
+            url: "@Url.Action("OdobriRezervaciju", "Termini")",
+            type: "GET",
+            data: { id: id },
+            success: function (data) {
+                if (data.success) {
+                    if (data.status === "Odobrena") {
+                        $(".replace_" + id).html("Da");
+                        $(".btnText_" + id).html("Zabrani");
+                    }
+                    else {
+                        $(".replace_" + id).html("Ne");
+                        $(".btnText_" + id).html("Odobri");
+                    }
+                }
+            }
+        });
+    });
+
+
+</script>
+
+

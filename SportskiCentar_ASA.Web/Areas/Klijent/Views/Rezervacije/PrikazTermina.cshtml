@@ -1,0 +1,61 @@
+﻿@model SportskiCentar_ASA.Web.Areas.Klijent.ViewModels.RezervacijePrikazTerminaVM
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section id="main-content">
+    <section class="wrapper">
+
+        <section class="panel">
+            <section class="panel-heading">
+                <h2>Lista termina</h2>
+            </section>
+            <section class="panel-body">
+
+                <br />
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Cijena</th>
+                            <th>Datum i vrijeme</th>
+                            <th>Prostorija</th>
+                            <th>Akcija</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var k in Model.rows)
+                        {
+                          
+                            <tr>
+                               
+                                <td>@k.Cijena</td>
+                                <td>@k.DatumVrijeme</td>
+                                <td>@k.Prostorija</td>
+                                
+                                <td style="border:0">
+                                
+                                    <a href="/Klijent%2FRezervacije/RezervisiTermin?TerminID=@k.TerminID" 
+                                       class="btn btn-success  btn-sm ">
+                                    Rezervisi</a>
+                               
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+              
+            </section>
+        </section>
+    </section>
+</section>
+
+
+
+

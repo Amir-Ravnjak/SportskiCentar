@@ -1,0 +1,62 @@
+﻿@using SportskiCentar_ASA.Web.Areas.Administrator.ViewModels;
+@model PoslovanjeRezervacijeAjaxVM
+
+
+<div>
+    <h2>Odrađene rezervacije</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Datum i vrijeme</td>
+                <td>Cijena</td>
+                <td>Prostorija</td>
+                <td>Klijent</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model.OdradjeneRezervacije)
+            {
+                <tr>
+                    <td>@x.DatumIVrijeme.ToString()</td>
+                    <td>@x.cijena</td>
+                    <td>@x.prostorija</td>
+                    <td>@x.klijent</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h2>Aktivne rezervacije</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Datum i vrijeme</td>
+                <td>Cijena</td>
+                <td>Prostorija</td>
+                <td>Klijent</td>
+                <td>Odobrena</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model.Rezervacije)
+            {
+                <tr>
+                    <td>@x.DatumIVrijeme.ToString()</td>
+                    <td>@x.cijena</td>
+                    <td>@x.prostorija</td>
+                    <td>@x.klijent</td>
+                    @if (x.odobrena)
+                    {
+                        <td>DA</td>
+                    }
+                    else
+                    {
+                        <td>NE</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

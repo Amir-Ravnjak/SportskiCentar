@@ -1,0 +1,38 @@
+﻿@using SportskiCentar_ASA.Web.Areas.Administrator.ViewModels;
+@model PoslovanjeRacunDetaljiVM
+
+<h2>Opće informacije</h2>
+
+<table class="table">
+    <tr>
+        <td>Datum izdavanja</td>
+        <td>@Model.datumIzdavnaja</td>
+    </tr>
+    <tr>
+        <td>Klijent</td>
+        <td>@Model.klijent</td>
+    </tr>
+</table>
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>Artikal</th>
+            <th>Količina</th>
+            <th>Cijena(jed)</th>
+            <th>Ukupno</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var x in Model.racunStavke)
+        {
+            <tr>
+                <td>@x.artikalNaziv</td>
+                <td>@x.kolicina</td>
+                <td>@x.artikalCijena</td>
+                <td>@(x.artikalCijena*x.kolicina)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<h1 style="float:right">Ukupan iznos: @Model.ukupanIznos</h1>

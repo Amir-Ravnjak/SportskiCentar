@@ -1,0 +1,138 @@
+﻿@using SportskiCentar_ASA.Web.Areas.Administrator.ViewModels;
+@model PoslovanjeShopVM
+@{
+    ViewData["Title"] = "Shop";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <header class="panel-heading">
+                <h2>Shop</h2>
+            </header>
+            <h3>Odaberite šta želite pregledat</h3>
+            <button id="btnRac" class="btn">Racuni</button><button id="btnArt" class="btn">Stanje artikala</button><br />
+            <br />
+            <div id="rac" style="display:none">
+                <form id="forma1">
+                <label for="klijentId">Klijent:</label>
+                <select name="klijentId">
+                    <option>Svi</option>
+                    @foreach (var x in Model.Klijenti)
+                    {
+                        <option value="@x.Value">@x.Text</option>
+                    }
+                </select>
+            </form>
+            <input type="submit" id="subbtn" class="btn btn-primary" value="Pretraži" />
+            <div id="ajaxPoziv">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Datum izdavanja</th>
+                            <th>Dostava</th>
+                            <th>Klijent</th>
+                            <th>Ukupan iznos</th>
+                            <th>Akcija</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var x in Model.racuni)
+                        {
+                            <tr>
+                                <td>@x.DatumIzdavanja.ToShortDateString()</td>
+                                @if (x.Dostava != null)
+                                {
+                                    <td>DA</td>
+                                }
+                                else
+                                {
+                                    <td>NE</td>
+                                }
+                                <td>@x.Klijent</td>
+                                <td>@x.UkupanIznos</td>
+                                <td><button id="btnDetalji-@x.id" class="btn btn-primary">Detalji</button>
+                                <script>
+                                    $("#btnDetalji-@x.id").click(function myfunction() {
+                                        $.get("/Administrator/Poslovanje/RacunDetalji?id=@x.id", function (rezultat, status) {
+                                            $("#ajaxPoziv").html(rezultat);
+                                        })
+                                    });
+                                </script>
+                                </td>
+                                
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            </div>
+            <div id="art" style="display:none">
+                <table class="table">
+
+                    <thead>
+                        <tr>
+                            <th>Naziv</th>
+                            <th>Cijena</th>
+                            <th>Količina</th>
+                            <th>Podkategorija</th>
+                            <th>Kategorija</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var x in Model.artikli)
+                        {
+                            <tr>
+                                <td>@x.naziv</td>
+                                <td>@x.cijena</td>
+                                <td>@x.kolicina</td>
+                                <td>@x.podKategorija</td>
+                                <td>@x.kategorija</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </section>
+</section>
+
+<script>
+    $("#btnRac").click(function () {
+        if ($("#rac").css("display") == "none") {
+            $("#rac").css("display", "block")
+        }
+        if ($("#art").css("display") == "block") {
+            $("#art").css("display", "none");
+        }
+    });
+
+    $("#btnArt").click(function () {
+        if ($("#art").css("display") == "none") {
+            $("#art").css("display", "block")
+        }
+        if ($("#rac").css("display") == "block") {
+            $("#rac").css("display", "none");
+        }
+    });
+    
+
+    $("#subbtn").click(function (event) {
+
+        var form = $("#forma1");
+
+        $.ajax(
+            {
+                type: "POST",
+                url: "/Administrator/Poslovanje/PretrazivanjeRacuna",
+                data: form.serialize(),
+                success: function (rezultat) {
+                    $("#ajaxPoziv").html(rezultat);
+                }
+            }
+
+        );
+    }
+    );
+    
+</script>

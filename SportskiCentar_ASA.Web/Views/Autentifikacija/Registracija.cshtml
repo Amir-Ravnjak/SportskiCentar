@@ -1,0 +1,88 @@
+﻿@model SportskiCentar_ASA.Web.ViewModels.AutentifikacijaRegistracijaVM
+@{
+    ViewData["Title"] = "Registracija";
+}
+
+<!-- Bootstrap core CSS -->
+<link href="~/css/bootstrap.min.css" rel="stylesheet">
+<link href="~/css/validationErrors.css" rel="stylesheet">
+<link href="~/css/bootstrap-reset.css" rel="stylesheet">
+<!--external css-->
+<link href="~/css/font-awesome/css/font-awesome.css" rel="stylesheet" />
+<!-- Custom styles for this template -->
+<link href="~/css/style.css" rel="stylesheet">
+<link href="~/css/style-responsive.css" rel="stylesheet" />
+<style>
+    .field-validation-error {
+        color: red;
+    }
+</style>
+
+<div class="container" style="width:40%;">
+    <form asp-action="Registracija" class="form-signin" method="post">
+        <h2 class="form-signin-heading text-center">Sportski centar "ASA"</h2>
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+        }
+        <label asp-for="Ime">Ime:</label>
+        <input asp-for="Ime" class="form-control" placeholder="Unesite vase ime" autofocus />
+        @Html.ValidationMessageFor(Model => Model.Ime)<br />
+
+
+
+
+        <label asp-for="Prezime">Prezime:</label>
+        <input asp-for="Prezime" class="form-control" placeholder="Unesite vase prezime" />
+        @Html.ValidationMessageFor(Model => Model.Prezime)<br />
+
+
+
+        <label asp-for="KorisnickoIme">Korisnicko ime:</label>
+        <input asp-for="KorisnickoIme" class="form-control" placeholder="Unesite vase korisnicko ime" />
+        @Html.ValidationMessageFor(Model => Model.KorisnickoIme)<br />
+
+        <label asp-for="Password">Sifra:</label>
+        <input asp-for="Password" class="form-control" placeholder="Unesite vasu lozinku" />
+        @Html.ValidationMessageFor(Model => Model.Password)<br />
+
+        <label asp-for="email">Email:</label>
+        <input asp-for="email" class="form-control" placeholder="Unesite vas email" />
+        @Html.ValidationMessageFor(Model => Model.email)<br />
+
+        <label asp-for="Spol">Spol:</label>
+        <input asp-for="Spol" class="form-control" placeholder="Unesite vas spol" /><br />
+
+
+        <label asp-for="JBMG">JMBG:</label>
+        <input asp-for="JBMG" class="form-control" placeholder="Unesite vas JMBG" />
+        @Html.ValidationMessageFor(Model => Model.JBMG)<br />
+
+
+        <label asp-for="GradID">Grad:</label>
+        <select asp-for="GradID" asp-items="@Model.Gradovi">
+            <option value="0">
+                Odaberite grad
+            </option>
+        </select>
+        @*@Html.ValidationMessageFor(Model => Model.GradID)<br />*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <br /><br />
+        <input type="submit" class="btn btn-lg btn-primary btn-block" value="Registruj se" />
+    </form>
+        <br />
+    <br />
+</div>
+

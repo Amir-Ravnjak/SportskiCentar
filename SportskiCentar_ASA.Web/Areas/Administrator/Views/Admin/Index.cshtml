@@ -1,0 +1,67 @@
+﻿@using SportskiCentar_ASA.Web.Areas.Administrator.ViewModels;
+@model AdminIndexVM
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <header class="panel-heading">
+                <h1>Opće informacije</h1>
+            </header>
+            <div id="container1">
+            <div class="poc">
+                <img src="~/images/accs.png" />
+                <h3>Trenutno naloga: @Model.trenutnoKorisnika</h3>
+                <br />
+                <h4>Klijenata: @Model.klijenata      Uposlenika: @Model.uposlenika      Administratora: @Model.administratora</h4><br />
+                <a href="/Administrator/Korisnici/Pregled" class="btn btn-primary" >Pregled</a>
+            </div>
+            <div class="poc">
+                <img src="~/images/calendar.png" />
+                <h3>Termini:</h3>
+                <h4>Odrađeno termina: @Model.odrađenoTermina Propalo termina: @Model.propaloTermina</h4><br />
+                <h4>Rezervacija: @Model.rezervisanoTermina Slobodnih termina: @Model.slobodniTermini</h4>
+
+                <a href="/Administrator/Poslovanje/Termini" class="btn btn-primary" >Detaljnije</a>
+                    
+            </div>
+
+            <div class="poc">
+                <img src="~/images/shop.png" />
+                <h2>Shop:</h2>
+                <h4>Odrađeno narudžbi: @Model.narudzbe Prodano artikala: @Model.artikli</h4>
+                <a href="/Administrator/Poslovanje/Shop" class="btn btn-primary">Detaljnije</a>
+
+            </div>
+            </div>
+        </section>
+    </section>
+</section>
+<style>
+    h1{
+        text-align:center;
+    }
+    #container1 {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-around;
+        border-radius: 15px;
+        width:100%;
+    }
+
+    .poc {
+        width: 33%;
+        text-align: center;
+        color: black;
+        margin-top:2pc;
+    }
+
+    .poc img {
+        width: 60%;
+        max-width:20pc;
+        height: auto;
+    }
+</style>

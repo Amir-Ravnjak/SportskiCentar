@@ -1,0 +1,72 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model SportskiCentar_ASA.Web.Areas.Uposlenik.ViewModels.ArtikliDodajVM
+@{
+    ViewData["Title"] = "Dodaj";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <header class="panel-heading">
+                <h3>Novi artikal</h3>
+            </header>
+            <div class="panel-body">
+                
+                <form asp-action="Snimi" method="post" enctype="multipart/form-data">
+                    @if (!ViewData.ModelState.IsValid)
+                     {
+                        <div asp-validation-summary="All" class="alert alert-danger"></div>
+                     }
+                    <div class="form-group">
+                        <label asp-for="Artikal.id" hidden"></label>
+                        <input type="hidden" asp-for="Artikal.id" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Artikal.Naziv">Naziv:</label>
+                        <input asp-for="Artikal.Naziv" class="form-control" autofocus />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Artikal.Cijena">Cijena(KM):</label>
+                        <input asp-for="Artikal.Cijena" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Artikal.Kolicina">Kolicina:</label>
+                        <input asp-for="Artikal.Kolicina" class="form-control" />
+                    </div>
+                   
+                    <div class="form-group">
+                        <label>Slika:</label>
+                        <input type="file" name="dokument" class="form-control" />
+                        <p style="color:red;">Maksimalna veličina: 1 MB. Slike veće od 1 MB neće biti procesirane.</p
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Artikal.PodKategorijaID">Podkategorija:</label>
+                        <select asp-for="Artikal.PodKategorijaID" asp-items="@Model.Podkategorije" class="form-control"></select>
+                    </div>
+
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i>Sacuvaj</button>
+                        <a asp-action="Index" class="btn btn-default"><i class="fa fa-times"></i>Odustani</a>
+                    </div>
+
+                </form>
+
+                <a class="btnDodajPodkategoriju btn btn-success">Dodaj podkategoriju</a>
+            </div>
+        </section>
+    </section>
+</section>
+<div id="ajaxID"></div>
+<script>
+    $(".btnDodajPodkategoriju").click(function () {
+
+        $.get("/Uposlenik/Shop/DodajPodkategoriju",
+            function (rezultat, status) {
+                $("#ajaxID").html(rezultat);
+
+            });
+    });
+
+</script>

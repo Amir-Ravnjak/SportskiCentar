@@ -1,0 +1,71 @@
+﻿@model HomeIndexViewModel
+
+<section id="main-content">
+    <section class="wrapper">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3><i class="fa fa-info-circle"></i> Opće informacije</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row state-overview">
+                    <div class="col-lg-3 col-sm-6">
+                        <section class="panel">
+                            <div class="symbol terques">
+                                <i class="fa fa-shopping-cart"></i>
+                            </div>
+                            <div class="value">
+                                <h1 class="">@Model.Informacije.UkupnoProizvoda</h1>
+                                <p>proizvoda</p>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <section class="panel">
+                            <div class="symbol red">
+                                <i class="fa fa-male"></i>
+                            </div>
+                            <div class="value">
+                                <h1 class="">@Model.Informacije.UkupnoUposlenika</h1>
+                                <p>uposlenika</p>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <section class="panel">
+                            <div class="symbol yellow">
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <div class="value">
+                                <h1 class="">@Model.Informacije.UkupnoKlijenata</h1>
+                                <p>klijenata</p>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <section class="panel">
+                            <div class="symbol blue">
+                                <i class="fa fa-money"></i>
+                            </div>
+                            <div class="value">
+                                <h1 class="">@Model.Informacije.UkupnaZarada</h1>
+                                <p>zarada</p>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="panel">
+            <div class="panel-heading">
+                <h3><i class="fa fa-calendar"></i> Odobrene rezervacije</h3>
+            </div>
+            <div class="panel-body">
+                <div id='calendar'></div>
+            </div>
+        </div>
+
+    </section>
+</section>
+

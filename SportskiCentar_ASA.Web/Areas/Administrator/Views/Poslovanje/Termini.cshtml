@@ -1,0 +1,101 @@
+﻿@using SportskiCentar_ASA.Web.Areas.Administrator.ViewModels;
+@model PoslovanjeTerminiVM
+
+@{
+    ViewData["Title"] = "Termini";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Termini</h2>
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <header class="panel-heading">
+                <h2>Termini</h2>
+            </header>
+            <form id="forma1">
+                <label for="vrstaPretrage">Termini:</label>
+                <select name="vrstaPretrage" id="vrstaPretrage">
+                    <option></option>
+                    <option value="1">Termini</option>                    
+                    <option value="2">Rezervacije</option>
+                    
+                </select>
+            </form>
+            <input type="submit" id="subbtn" value="Pretraži" class="btn btn-primary"/>
+            <div id="ajaxDiv">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>Datum i vrijeme</td>
+                            <td>Cijena</td>
+                            <td>Prostorija</td>
+                            <td>Rezervacija</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var x in Model.termini)
+                        {
+                            <tr>
+                                <td>@x.DatumIVrijeme.ToString()</td>
+                                <td>@x.cijena</td>
+                                <td>@x.prostorija</td>
+                                @if (x.rezervacija)
+                                {
+                                    <td>DA</td>
+                                }
+                                else
+                                {
+                                    <td>NE</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </section>
+    </section>
+</section>
+
+<script>
+
+    $("#subbtn").click(function (event) {
+
+        var form = $("#forma1");
+
+        var tip = document.getElementById("vrstaPretrage");
+
+        if (tip.value == 1) {
+
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "/Administrator/Poslovanje/TerminiAjax",
+                    data: form.serialize(),
+                    success: function (rezultat) {
+                        $("#ajaxDiv").html(rezultat);
+                    }
+                }
+
+            );
+        }
+        else if (tip.value == 2) {
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "/Administrator/Poslovanje/RezervacijeAjax",
+                    data: form.serialize(),
+                    success: function (rezultat) {
+                        $("#ajaxDiv").html(rezultat);
+                    }
+                }
+
+            );
+        }
+        
+    }
+    );
+
+</script>

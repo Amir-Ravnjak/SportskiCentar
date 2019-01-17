@@ -1,0 +1,396 @@
+﻿@using Microsoft.AspNetCore.Http;
+@using SportskiCentar_ASA.Data.Models;
+@using SportskiCentar_ASA.Web.Helper;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+
+
+    var trenutniNalog = httpContextAccessor.HttpContext.Session.GetJson<Nalog>(Konfiguracija.LogiraniNalog) ?? new Nalog();
+    var trenutnoArtikala = ViewData["brojArtikala"];
+    }
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="">
+    <meta name="author" content="Mosaddek">
+    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <link rel="shortcut icon" href="img/favicon.html">
+
+    <title>Sportski centar "ASA"</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.2/fullcalendar.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.2/fullcalendar.print.css" media="print" />
+    <script src="~/js/jquery.js"></script>
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="~/js/moment.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.2/fullcalendar.min.js"></script>
+    @*<script src="~/js/script-custom-calendar.js"></script>*@
+
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <link href=" https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="~/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/css/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen" />
+    <link rel="stylesheet" href="~/css/owl.carousel.css" type="text/css">
+
+    <!--right slidebar-->
+    <link href="~/css/slidebars.css" rel="stylesheet">
+
+    @*qtip*@
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/basic/jquery.qtip.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/basic/jquery.qtip.min.js"></script>
+
+    <!-- Custom styles for this template -->
+
+    <link href="~/css/style.css" rel="stylesheet">
+    <link href="~/css/style-responsive.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.css" />
+
+    <!-- Full Calendar -->
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('.dp').datepicker({
+                format: 'dd.mm.yyyy',
+                weekStart: 1,
+                clearBtn: true,
+                language: 'de-DE',
+                autoclose: true,
+                forceParse: false,
+                calendarWeeks: true
+            });
+        });
+    </script>
+
+    <script>
+        $(function () {
+            $('#calendar').fullCalendar({
+                header:
+                    {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,agendaWeek,agendaDay'
+                    },
+                buttonText: {
+                    today: 'today',
+                    month: 'month',
+                    week: 'week',
+                    day: 'day'
+                },
+                events: function (start, end, timezone, callback) {
+                    $.ajax({
+                        url: '/Home/GetCalendarData',
+                        type: "GET",
+                        dataType: "JSON",
+                        success: function (result) {
+                            var events = [];
+
+                            $.each(result, function (i, data) {
+                                events.push(
+                                    {
+                                        title: data.title+"\n"+data.prostorija+"\n"+data.start_Date+"\n"+data.end_Date,
+                                        description: data.desc,
+                                        start: data.start_Date, //"2018-01-01", //moment(data.Start_Date).format('YYYY-MM-DD'),
+                                        end: data.end_Date, //"2018-01-08", //moment(data.End_Date).format('YYYY-MM-DD'),
+                                        backgroundColor: "rgb(255, 108, 96)",
+                                        borderColor: "none"
+                                    });
+                            });
+
+
+                            callback(events);
+                        }
+                    });
+                },
+                eventRender: function (event, element) {
+                    element.qtip(
+                        {
+                            content: event.description
+                        });
+                },
+            });
+        });
+    </script>
+
+
+</head>
+<body>
+    <section id="container">
+        <!--header start-->
+        <header class="header white-bg">
+            <div class="sidebar-toggle-box">
+                <i class="fa fa-bars"></i>
+            </div>
+            <!--logo start-->
+            <a href="#" class="logo">Sportski centar<span> ASA</span></a>
+            <!--logo end-->
+            <div class="nav notify-row" id="top_menu">
+                <!--  notification start  -->
+                <!--  notification end -->
+                @if (trenutniNalog.IsKlijent)
+                {
+                    <a href="/Klijent/Shop/UvidKorpe" class="btn btn-success">Korpa - @trenutnoArtikala</a>
+                }
+            </div>
+
+           
+        
+            <div class="top-nav ">
+             
+                <!--search & user info start-->
+                <ul class="nav pull-right top-menu">
+                    <li>
+                        <input type="text" class="form-control search" placeholder="Search">
+                      
+                    </li>
+                    <!-- user login dropdown start-->
+                    
+                    <li class="dropdown">
+                      
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <img alt="" src="img/avatar1_small.jpg">
+                            <span class="username">@trenutniNalog.KorisnickoIme</span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu extended logout">
+                            <div class="log-arrow-up"></div>
+                                <li>
+                                    <a asp-area="" asp-controller="Autentifikacija" asp-action="Odjava"><i class="fa fa-bell-o"></i> Odjava</a>
+                                </li>
+                        </ul>
+                    </li>
+
+                    <!-- user login dropdown end -->
+                </ul>
+                <!--search & user info end-->
+            </div>
+        </header>
+        <!--header end-->
+        <!--sidebar start-->
+        <aside>
+            <div id="sidebar" class="nav-collapse ">
+                <!-- sidebar menu start-->
+                <ul class="sidebar-menu" id="nav-accordion">
+                    <li>
+                        @if (trenutniNalog.IsUposlenik)
+                        {
+                            <a class="active" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="fa fa-dashboard"></i>
+                                <span>Početna stranica</span>
+                            </a>
+
+                        }
+                        @if (trenutniNalog.IsKlijent)
+                        {
+                            <a class="active" asp-area="Klijent" asp-controller="Rezervacije" asp-action="Index">
+                                <i class="fa fa-dashboard"></i>
+                                <span>Početna stranica</span>
+                            </a>
+
+                        }
+                        @if (trenutniNalog.IsAdministrator)
+                        {
+                            <a asp-area="Administrator" asp-controller="Admin" asp-action="Index">
+                                <i class="fa fa-dashboard"></i>
+                                <span>Početna stranica</span>
+                            </a>
+                        }
+
+                    </li>
+
+                    @if (trenutniNalog.IsAdministrator)
+    {
+               <li class="sub-menu">
+        <a asp-area="Administrator" asp-controller="Nalog" asp-action="Index">
+            <i class="fa fa-user"></i>
+            <span>Nalog</span>
+        </a>
+        
+    </li>
+
+    <li class="sub-menu">
+        <a href="javascript:;">
+            <i class="fa fa-user"></i>
+            <span>Pregled naloga</span>
+        </a>
+        <ul class="sub">
+            <li><a asp-area="Administrator" asp-controller="Korisnici" asp-action="Pregled">Pregled</a></li>
+
+            <li><a asp-area="Administrator" asp-controller="Korisnici" asp-action="Dodaj">Dodaj novi</a></li>
+        </ul>
+    </li>
+
+    <li class="sub-menu">
+        <a href="javascript:;">
+            <i class="fa fa-location-arrow"></i>
+            <span>Pregled poslovanja</span>
+        </a>
+        <ul class="sub">
+            <li><a asp-area="Administrator" asp-controller="Poslovanje" asp-action="Shop">Shop</a></li>
+            <li><a asp-area="Administrator" asp-controller="Poslovanje" asp-action="Termini">Termini</a></li>
+        </ul>
+    </li>
+    
+
+
+}
+else if (trenutniNalog.IsUposlenik)
+{
+
+                <li class="sub-menu">
+                    <a asp-area="Uposlenik" asp-controller="Nalog" asp-action="Index">
+                        <i class="fa fa-user"></i>
+                        <span>Nalog</span>
+                    </a>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-euro"></i>
+                        <span>Shop</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a asp-area="Uposlenik" asp-controller="Shop" asp-action="Index">Prikaz</a></li>
+                        <li><a asp-area="Uposlenik" asp-controller="Shop" asp-action="Dodaj">Dodaj</a></li>
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a asp-area="Uposlenik" asp-controller="Termini" asp-action="Index">
+                        <i class="fa fa-list-ol"></i>
+                        <span>Termini</span>
+                    </a>
+                </li>
+
+                    }
+                    else if (trenutniNalog.IsKlijent)
+                    {
+
+
+
+                     
+                        <li class="sub-menu">
+                            <a asp-area="Klijent" asp-controller="Nalog" asp-action="PrikazNaloga">
+                                <i class="fa fa-user"></i>
+                                <span>Nalog</span>
+                            </a>
+                        </li>
+
+
+
+
+     <li class="sub-menu">
+        <a asp-area="Klijent" asp-controller="Rezervacije" asp-action="PrikazTermina">
+            <i class="fa fa-list-ol"></i>
+            <span>Termini</span>
+        </a>
+        <ul class="sub">
+            <li><a asp-area="Klijent" asp-controller="Rezervacije" asp-action="PrikazRezervacija">Prikaz rezervacija</a></li>
+            <li><a asp-area="Klijent" asp-controller="Rezervacije" asp-action="PrikazTermina">Prikaz termina</a></li>
+        </ul>
+    </li>
+
+    <li class="sub-menu">
+        <a asp-area="Klijent" asp-controller="Shop" asp-action="PrikazProizvoda">
+            <i class="fa fa-euro"></i>
+            <span>Shop</span>
+        </a>
+        <ul class="sub">
+            <li><a asp-area="Klijent" asp-controller="Shop" asp-action="PrikazArtikala">Prikaz artikala</a></li>
+            <li><a asp-area="Klijent" asp-controller="Shop" asp-action="UvidKorpe">Uvid u korpu</a></li>
+
+        </ul>
+    </li>
+
+
+
+}
+                </ul>
+                <!-- sidebar menu end-->
+            </div>
+        </aside>
+        <!--sidebar end-->
+        <!--main content start-->
+        @RenderBody()
+        <!--main content end-->
+        <!--footer start-->
+        <footer class="site-footer">
+            <div class="text-center">
+                @DateTime.Now.Year &copy; ASA.
+
+            </div>
+        </footer>
+        <!--footer end-->
+    </section>
+
+
+    <!-- js placed at the end of the document so the pages load faster -->
+    <script src="~/js/bootstrap.min.js"></script>
+    <script class="include" type="text/javascript" src="~/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="~/js/jquery.scrollTo.min.js"></script>
+    <script src="~/js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script src="~/js/jquery.sparkline.js" type="text/javascript"></script>
+    <script src="~/js/jquery.easy-pie-chart.js"></script>
+    <script src="~/js/owl.carousel.js"></script>
+    <script src="~/js/jquery.customSelect.min.js"></script>
+    <script src="~/js/respond.min.js"></script>
+    <!--right slidebar-->
+    <script src="~/js/slidebars.min.js"></script>
+
+    <!--common script for all pages-->
+    <script src="~/js/common-scripts.js"></script>
+
+    <!--script for this page-->
+    <script src="~/js/sparkline-chart.js"></script>
+    <script src="~/js/easy-pie-chart.js"></script>
+    <script src="~/js/count.js"></script>
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+
+
+
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.2/fullcalendar.min.js"></script>
+        <script src="~/js/script-custom-calendar.js"></script>*@
+
+    <script>
+
+        //owl carousel
+
+        $(document).ready(function () {
+
+
+            $("#owl-demo").owlCarousel({
+                navigation: true,
+                slideSpeed: 300,
+                paginationSpeed: 400,
+                singleItem: true,
+                autoPlay: true
+
+            });
+
+
+        });
+
+        //custom select box
+
+        $(function () {
+            $('select.styled').customSelect();
+        });
+
+        $(window).on("resize", function () {
+            var owl = $("#owl-demo").data("owlCarousel");
+            owl.reinit();
+        });
+
+    </script>
+
+
+
+</body>
+</html>

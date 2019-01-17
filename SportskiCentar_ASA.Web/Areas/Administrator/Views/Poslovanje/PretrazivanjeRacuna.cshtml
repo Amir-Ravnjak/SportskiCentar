@@ -1,0 +1,42 @@
+﻿@using SportskiCentar_ASA.Web.Areas.Administrator.ViewModels;
+@model PoslovanjeShopVM
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Datum izdavanja</th>
+            <th>Dostava</th>
+            <th>Klijent</th>
+            <th>Ukupan iznos</th>
+            <th>Akcija</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var x in Model.racuni)
+        {
+            <tr>
+                <td>@x.DatumIzdavanja.ToShortDateString()</td>
+                @if (x.Dostava != null)
+                {
+                    <td>DA</td>
+                }
+                else
+                {
+                    <td>NE</td>
+                }
+                <td>@x.Klijent</td>
+                <td>@x.UkupanIznos</td>
+                <td>
+                    <button id="btnDetalji-@x.id" class="btn btn-primary">Detalji</button>
+                    <script>
+                                    $("#btnDetalji-@x.id").click(function myfunction() {
+                                        $.get("/Administrator/Poslovanje/RacunDetalji?id=@x.id", function (rezultat, status) {
+                                            $("#ajaxPoziv").html(rezultat);
+                                        })
+                                    });
+                    </script>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,40 @@
+﻿@using SportskiCentar_ASA.Web.Areas.Administrator.ViewModels;
+@model AdminNalogIndexVM
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <header class="panel-heading">
+                <h2>Profil</h2>
+                <br />
+            </header>
+            <form class="form-inline" action="Nalog/Snimi" method="post">
+
+                <input type="number" name="id" value="@Model.id" hidden />
+
+                <label style="width:10%" for="username">Korisničko ime</label>
+                <input class="form-control" type="text" name="username" id="username" value="@Model.username" />
+                <br />
+                <label style="width:10%" for="ime">Ime</label>
+                <input class="form-control" type="text" name="ime" id="ime" value="@Model.ime" />
+                <br />
+                <label style="width:10%" for="prezime">Prezime</label>
+                <input class="form-control" type="text" name="prezime" id="prezime" value="@Model.prezime" />
+                <br />
+                <label style="width:10%" for="lozinka">Lozinka</label>
+                <input class="form-control" type="password" name="lozinka" id="lozinka" value="@Model.lozinka" />
+                <br />
+                <label style="width:10%" for="email">Email</label>
+                <input class="form-control" type="email" name="email" id="email" value="@Model.email" />
+                <br />
+                <input class="btn btn-primary" type="submit" value="Snimi" />
+
+            </form>
+        </section>
+    </section>
+</section>
