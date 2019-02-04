@@ -28,7 +28,7 @@ namespace SportskiCentar_ASA.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<MojContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("lokalni1")));
+                options.UseSqlServer(Configuration.GetConnectionString("azure-server")));
             services.AddMvc();
 
            

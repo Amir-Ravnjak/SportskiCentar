@@ -22,7 +22,8 @@ namespace SportskiCentar_ASA.Web.Areas.Administrator.Controllers
         }
         public IActionResult Index()
         {
-            AdminNalogIndexVM model = _db.Administratori.Select(x => new AdminNalogIndexVM {
+            Nalog trenutniNalog = Autentifikacija.GetLogiraniNalog(HttpContext);
+            AdminNalogIndexVM model = _db.Administratori.Where(q=>q.NalogID==trenutniNalog.id).Select(x => new AdminNalogIndexVM {
                 id = x.id,
                 ime = x.Ime,
                 prezime = x.Prezime,
