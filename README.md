@@ -1,2 +1,2 @@
 # SportskiCentar
-Seminarski rad rs1
+DOT NET CORE
